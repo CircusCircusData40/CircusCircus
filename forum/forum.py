@@ -27,7 +27,7 @@ else:
 # adding db url
 import os
 if os.getenv("DATABASE_URL"):
-	app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv['DATABASE_URL']
+	app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 else:
 	print("DATABASE_URL is not set, using sqlite")
 
