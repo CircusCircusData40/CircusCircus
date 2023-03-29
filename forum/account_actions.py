@@ -4,6 +4,7 @@ from werkzeug.local import LocalProxy
 
 from forum.page_generator import *
 from forum.database_checks import *
+from forum.object_models import *
 
 current_user = LocalProxy(lambda: _get_user())
 
