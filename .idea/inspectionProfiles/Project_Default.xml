@@ -5,10 +5,24 @@
       <option name="ignoredPackages">
         <value>
           <list size="1">
+<<<<<<< HEAD
             <item index="0" class="java.lang.String" itemvalue="psycopg2" />
+=======
+            <item index="0" class="java.lang.String" itemvalue="SQLAlchemy" />
+>>>>>>> 222a620 (Trung test push)
           </list>
         </value>
       </option>
     </inspection_tool>
+<<<<<<< HEAD
+=======
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="small_town_teller.Bank.accounts" />
+        </list>
+      </option>
+    </inspection_tool>
+>>>>>>> 222a620 (Trung test push)
   </profile>
 </component>
