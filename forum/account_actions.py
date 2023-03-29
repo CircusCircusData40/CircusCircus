@@ -1,4 +1,6 @@
 from flask_login import login_user, logout_user, current_user
+from flask_login.utils import _get_user
+from werkzeug.local import LocalProxy
 
 from forum.page_generator import *
 from forum.database_checks import *
