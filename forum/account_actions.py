@@ -1,3 +1,5 @@
+import sqlite3
+
 from flask_login import login_user, logout_user, current_user
 from flask_login.utils import _get_user
 from werkzeug.local import LocalProxy
@@ -104,30 +106,3 @@ def comment():
     post.comments.append(comment)
     db.session.commit()
     return redirect("/viewpost?post=" + str(post_id))
-
-
-@login_required
-@app.route('/usersettings', methods=["POST"])
-def user_submit():
-    if request.method == "POST":
-        name = request.form['name']
-        email = request.form['email']
-        gender = request.form['gender']
-        age = request.form['age']
-        comments = request.form['comments']
-        details = [name, email, gender, age, comments]
-        db.session.add(details)
-        db.session.commit()
-    else:
-        return render_template("usersettings.html")
-
-
-@login_required
-@app.route('/usersettings', methods=["POST"])
-def photo_upload():
-    if request.method == "POST":
-        photo = request.form["photo"]
-        db.session.add(photo)
-        db.session.commit()
-    else:
-        return render_template("usersettings.html")
