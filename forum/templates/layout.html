@@ -1,11 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename="bootstrap.min.css")}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename="style.css")}}">
-	<title>{{ config.SITE_NAME }}</title>
 </head>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ config.SITE_NAME }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+    .navbar {
+      margin-bottom: 5;
+      border-radius: 5;
+    }
+    .row.content {height: 550px}
+    .sidenav {
+      padding-top: 40px;
+      background-color: #90EE90;
+      height: 100%;
+    }
+    footer {
+      background-color: green;
+      color: black;
+      padding: 15px;
+    }
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 40px;
+      }
+      .row.content {height:auto;}
+    }
+ </style>
+</head>
+
 <body>
+
 <div class="page">
 	<div class="header">
 		{% include 'header.html' %}
@@ -19,15 +50,44 @@
 
 	{% endfor %}
 	</div>
-{% endif %}
-	<div class="content">
-		{% block body %}{% endblock %}
+	{% endif %}
+
+
+	<div class="container-fluid text-center">
+	  <div class="row content">
+		<div class="col-sm-2 sidenav">
+		  <p><a href="/subforum?sub=1">>>>> Main Forum <<<<</a></p>
+		  <p><a href="/subforum?sub=4">>> General Discussion <<</a></p>
+		  <p><a href="/subforum?sub=5">>> Other Discussion <<</a></p>
+		</div>
+		<div class="col-sm-8 text-left">
+		  <h1>Welcome to ZipCode Forum</h1>
+		  <p>THE VOICE OF COOL DATA 40 COHORT</p>
+		  <hr>
+			<div class="content">
+			{% block body %}{% endblock %}
+			</div>
+		</div>
+		<div class="col-sm-2 sidenav">
+		  <div class="well">
+			<p>DATA 4.0</p>
+		  </div>
+		  <div class="well">
+			<p>ZIPCODE</p>
+		  </div>
+		  <div class="well">
+			<p>COOL COOL</p>
+		  </div>
+		</div>
+	  </div>
 	</div>
-	<div class="footer">
+
+	<footer class="container-fluid text-center">
 		{% include 'footer.html' %}
-	</div>
+	</footer>
 </div>
 </body>
-
-
 </html>
+
+
+
