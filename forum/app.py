@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for, redirect, request
+from flask_login import login_required
 
 app = Flask(__name__)
 app.config.update(
@@ -21,14 +22,3 @@ def instructor():
     return render_template("instructor.html")
 
 
-@app.route('/usersettings', methods=["POST", "GET"])
-def usersettings():
-    # if request.method == "POST":
-    #     name = request.form[name]
-    #     email = request.form[email]
-    #     gender = request.form[gender]
-    #     age = request.form[age]
-    #     comments = request.form[comments]
-    #
-    # else:
-        return render_template("usersettings.html")

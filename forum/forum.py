@@ -14,20 +14,25 @@
 # import datetime
 # from flask_login.login_manager import LoginManager
 # from werkzeug.security import generate_password_hash, check_password_hash
+import sqlite3
+
+from flask import request
 
 from forum.account_actions import *
 # adding db url
 import os
+
 if os.getenv("DATABASE_URL"):
-	app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-	print("setting db url for postgres")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+    print("setting db url for postgres")
 else:
-	print("DATABASE_URL is not set, using sqlite")
+    print("DATABASE_URL is not set, using sqlite")
 
 db = SQLAlchemy(app)
 
 kris = "foo"
 datat31 = "good people"
+
 
 # #VIEWS
 #
@@ -75,7 +80,7 @@ datat31 = "good people"
 # 	comments = Comment.query.filter(Comment.post_id == postid).order_by(Comment.id.desc()) # no need for scalability now
 # 	return render_template("viewpost.html", post=post, path=subforum.path, comments=comments)
 
-#ACTIONS
+# ACTIONS
 
 # @login_required
 # @app.route('/action_comment', methods=['POST', 'GET'])
@@ -189,7 +194,7 @@ datat31 = "good people"
 # 	return link
 
 
-#from forum.app import db, app 
+# from forum.app import db, app
 
 
 # login_manager = LoginManager()
@@ -199,7 +204,6 @@ datat31 = "good people"
 # 	#runsetup()
 # 	port = int(os.environ["PORT"])
 # 	app.run(host='0.0.0.0', port=port, debug=True)
-
 
 
 # #DATABASE STUFF
@@ -228,8 +232,6 @@ datat31 = "good people"
 # 	return len(title) > 4 and len(title) < 140
 # def valid_content(content):
 # 	return len(content) > 10 and len(content) < 5000
-
-
 
 
 # #OBJECT MODELS
@@ -340,28 +342,31 @@ datat31 = "good people"
 
 
 def init_site():
-	admin = add_subforum("Forum", "Announcements, bug reports, and general discussion about the forum belongs here")
-	add_subforum("Announcements", "View forum announcements here",admin)
-	add_subforum("Bug Reports", "Report bugs with the forum here", admin)
-	add_subforum("General Discussion", "Use this subforum to post anything you want")
-	add_subforum("Other", "Discuss other things here")
+    admin = add_subforum("Forum", "Announcements, bug reports, and general discussion about the forum belongs here")
+    add_subforum("Announcements", "View forum announcements here", admin)
+    add_subforum("Bug Reports", "Report bugs with the forum here", admin)
+    add_subforum("General Discussion", "Use this subforum to post anything you want")
+    add_subforum("Other", "Discuss other things here")
+
 
 def add_subforum(title, description, parent=None):
-	sub = Subforum(title, description)
-	if parent:
-		for subforum in parent.subforums:
-			if subforum.title == title:
-				return
-		parent.subforums.append(sub)
-	else:
-		subforums = Subforum.query.filter(Subforum.parent_id == None).all()
-		for subforum in subforums:
-			if subforum.title == title:
-				return
-		db.session.add(sub)
-	print("adding " + title)
-	db.session.commit()
-	return sub
+    sub = Subforum(title, description)
+    if parent:
+        for subforum in parent.subforums:
+            if subforum.title == title:
+                return
+        parent.subforums.append(sub)
+    else:
+        subforums = Subforum.query.filter(Subforum.parent_id == None).all()
+        for subforum in subforums:
+            if subforum.title == title:
+                return
+        db.session.add(sub)
+    print("adding " + title)
+    db.session.commit()
+    return sub
+
+
 """
 def interpret_site_value(subforumstr):
 	segments = subforumstr.split(':')
@@ -405,8 +410,8 @@ def setup():
 """
 
 
+
 # db.drop_all()
 db.create_all()
 if not Subforum.query.all():
-		init_site()
-
+    init_site()
