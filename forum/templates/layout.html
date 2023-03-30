@@ -26,12 +26,24 @@
       padding: 15px;
     }
     @media screen and (max-width: 767px) {
-      .sidenav {
+  	.sidenav {
         height: auto;
         padding: 40px;
       }
-      .row.content {height:auto;}
+  	.row.content {height:auto;}
     }
+   .slide-in {
+	  animation: slide-in 1s forwards;
+	}
+
+	@keyframes slide-in {
+	  from {
+		transform: translateX(-100%);
+	  }
+	  to {
+		transform: translateX(0%);
+	  }
+	}
  </style>
 </head>
 
