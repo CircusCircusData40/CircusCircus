@@ -15,8 +15,7 @@
 # from flask_login.login_manager import LoginManager
 # from werkzeug.security import generate_password_hash, check_password_hash
 
-from forum.page_generator import *
-from forum.database_checks import *
+from forum.account_actions import *
 # adding db url
 import os
 if os.getenv("DATABASE_URL"):
