@@ -22,5 +22,5 @@ def instructor():
 
 
 @app.route('/usersettings')
-def team():
+def usersettings():
     return render_template("usersettings.html")
