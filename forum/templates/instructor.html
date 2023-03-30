@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block body%}
+<div class="instructor">
+    <p>Who is the cool Instructor?</p>
+    <form action="/create_cool_instructor" method="POST">
+        <input class="cool_instructor" type="text" placeholder="Kris Younger" name="Instructor">
+    </form>
+</div>
+{% endblock %}
