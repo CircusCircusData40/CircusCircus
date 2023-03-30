@@ -1,4 +1,7 @@
-from flask import Flask, render_template, url_for, redirect, request
+import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 app = Flask(__name__)
 app.config.update(
@@ -6,29 +9,21 @@ app.config.update(
     SECRET_KEY=b'kristofer',
     SITE_NAME="ZIPCODE FORUM",
     SITE_DESCRIPTION="THE VOICE OF COOL DATA 40 COHORT",
-    SQLALCHEMY_DATABASE_URI='sqlite:////tmp/database.db',
+    SQLALCHEMY_DATABASE_URI='sqlite:///database.db',
     SQLALCHEMY_ECHO=True
 )
 
-
-@app.route('/team')
-def team():
-    return render_template("team.html")
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
-@app.route('/instructor')
-def instructor():
-    return render_template("instructor.html")
+print("app.config done.")
 
-
-@app.route('/usersettings', methods=["POST", "GET"])
-def usersettings():
-    # if request.method == "POST":
-    #     name = request.form[name]
-    #     email = request.form[email]
-    #     gender = request.form[gender]
-    #     age = request.form[age]
-    #     comments = request.form[comments]
-    #
-    # else:
-        return render_template("usersettings.html")
+if os.getenv("DATABASE_URL"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+    print("setting db url for postgres")
+else:
+    print("DATABASE_URL is not set, using sqlite")
+db = SQLAlchemy(app)
+print("SQLAlchemy init.")
+print('checking for database')
