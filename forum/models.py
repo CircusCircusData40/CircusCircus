@@ -1,20 +1,8 @@
 from flask_login import UserMixin
-import re
 import datetime
-from flask_login.login_manager import LoginManager
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
+from forum.app import app, db, login_manager
 
-from forum.app import app
-
-if os.getenv("DATABASE_URL"):
-	app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-	print("setting db url for postgres")
-else:
-	print("DATABASE_URL is not set, using sqlite")
-
-db = SQLAlchemy(app)
 
 #OBJECT MODELS
 class User(UserMixin, db.Model):
@@ -123,3 +111,20 @@ class Comment(db.Model):
 		else:
 			self.savedresponce =  "Just a moment ago!"
 		return self.savedresponce
+
+def add_subforum(title, description, parent=None):
+	sub = Subforum(title, description)
+	if parent:
+		for subforum in parent.subforums:
+			if subforum.title == title:
+				return
+		parent.subforums.append(sub)
+	else:
+		subforums = Subforum.query.filter(Subforum.parent_id == None).all()
+		for subforum in subforums:
+			if subforum.title == title:
+				return
+		db.session.add(sub)
+	print("adding " + title)
+	db.session.commit()
+	return sub

@@ -3,10 +3,11 @@ import sqlite3
 from flask_login import login_user, logout_user, current_user
 from flask_login.utils import _get_user
 from werkzeug.local import LocalProxy
+from werkzeug.utils import redirect
 
-from forum.page_generator import *
-from forum.database_checks import *
-from forum.object_models import *
+from forum.forum import *
+from forum.user import *
+from forum.models import *
 
 current_user = LocalProxy(lambda: _get_user())
 
