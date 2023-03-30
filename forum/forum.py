@@ -1,12 +1,16 @@
+# start
 
 # from flask
 from flask import render_template, request
 from flask_login.utils import login_required
 
-from forum.app import app, db
+from forum.app import app, db # we run code in these imports
+
 from forum.models import Subforum, Post, Comment, User, add_subforum
 from forum.app import login_manager
-
+from forum.accounts import *
+from forum.user import *
+from forum.user_settings import *
 
 @login_manager.user_loader
 def load_user(userid):
