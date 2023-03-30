@@ -19,3 +19,8 @@ def team():
 @app.route('/instructor')
 def instructor():
     return render_template("instructor.html")
+
+
+@app.route('/usersettings')
+def team():
+    return render_template("usersettings.html")
