@@ -1,31 +1,16 @@
-<img src="static/logo.jpeg"
-		alt="A fancy Logo"
-		height="100"
-		width="100">
-<img src="static/logo.jpeg"
-		alt="A fancy Logo"
-		height="80"
-		width="80">
-<img src="static/logo.jpeg"
-		alt="A fancy Logo"
-		height="50"
-		width="50">
-<img src="static/logo.jpeg"
-		alt="A fancy Logo"
-		height="30"
-		width="30">
-<img src="static/logo.jpeg"
-		alt="A fancy Logo"
-		height="50"
-		width="50">
-<img src="static/logo.jpeg"
-		alt="A fancy Logo"
-		height="80"
-		width="80">
-<img src="static/logo.jpeg"
-		alt="A fancy Logo"
-		height="100"
-		width="100">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="100" width="100">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="80" width="80">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="50" width="50">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="30" width="30">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="50" width="50">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="80" width="80">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="100" width="100">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="80" width="80">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="50" width="50">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="30" width="30">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="50" width="50">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="80" width="80">
+<img src="static/logo.jpeg" alt="A fancy Logo" height="100" width="100">
 
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -36,10 +21,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">
-          <img src="static/logo.jpeg"
-		    alt="A fancy Logo"
-		    height="30"
-		    width="30">
+          <img src="static/logo.jpeg" alt="A fancy Logo" height="30" width="30">
       </a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
@@ -48,8 +30,8 @@
         <li><a href="/subforum?sub=1">Forum</a></li>
         <li><a href="/subforum?sub=4">General Discussion</a></li>
         <li><a href="/subforum?sub=5">Other Discussion</a></li>
-        <li><a href="/subforum?sub=5">About the Cool Team</a></li>
-        <li><a href="/subforum?sub=5">About the Cool Instructor</a></li>
+        <li><a href="/team">About the Cool Team</a></li>
+        <li><a href="/instructor">About the Cool Instructor</a></li>
         <li><a href="#">User Settings</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -57,7 +39,8 @@
           <li>
             <div class="login">
                 {% if current_user.is_authenticated %}
-                <b {% if current_user.admin %} style="color: red;" {% endif %}>{{ current_user.username }}</b><a class="logoutlink" href="/action_logout">>> logout <<</a>
+                <b {% if current_user.admin %} style="color: red;" {% endif %}>{{ current_user.username }}</b>
+                <a class="logoutlink" href="/action_logout">>> logout <<</a>
                 {% else %}
                 <a href="/loginform"><span class="glyphicon glyphicon-log-in"></span> >> Login or register << </a>
                 {% endif %}
@@ -67,5 +50,8 @@
     </div>
   </div>
 </nav>
-<a href="/" id="nolinks"><b>{{ config.SITE_NAME }}</b></a>{% if config.SITE_DESCRIPTION %} - {% endif %} <i>{{ config.SITE_DESCRIPTION }}</i>
+
+<a href="/" id="nolinks"><b>{{ config.SITE_NAME }}</b></a>
+{% if config.SITE_DESCRIPTION %} - {% endif %}
+<i>{{ config.SITE_DESCRIPTION }}</i>
 

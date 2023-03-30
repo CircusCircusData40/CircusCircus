@@ -28,6 +28,15 @@ def loginform():
 	return render_template("login.html")
 
 
+@app.route('/team')
+def team():
+    return render_template("team.html")
+
+
+@app.route('/instructor')
+def instructor():
+    return render_template("instructor.html")
+
 @login_required
 @app.route('/addpost')
 def addpost():
