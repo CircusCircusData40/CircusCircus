@@ -1,26 +1,5 @@
-from forum.app import app
-from forum.object_models import *
-from flask_login.login_manager import LoginManager
-
-# adding db url
-import os
-
-if os.getenv("DATABASE_URL"):
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-    print("setting db url for postgres")
-else:
-    print("DATABASE_URL is not set, using sqlite")
-
-db = SQLAlchemy(app)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
-# DATABASE STUFF
-@login_manager.user_loader
-def load_user(userid):
-    return User.query.get(userid)
+from forum.models import *
+import re
 
 
 password_regex = re.compile("^[a-zA-Z0-9!@#%&]{6,40}$")
