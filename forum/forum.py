@@ -93,4 +93,5 @@ if not Subforum.query.all():
     add_subforum("Bug Reports", "Report bugs with the forum here", admin)
     add_subforum("General Discussion", "Use this subforum to post anything you want")
     add_subforum("Other", "Discuss other things here")
+    add_subforum("Bready Bread Bread", "A place for people with bread on the head")
 
