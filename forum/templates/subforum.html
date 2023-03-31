@@ -45,6 +45,8 @@
 	<div class="post">
 		<div class="posttitle">
 		<a href="/viewpost?post={{ post.id }}">{{ post.title }}</a>
+			<button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+			 <button class="btn" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
 		</div>
 		<div class="postusername">
 			by <b {% if post.user.admin %} style="color: red;" {% endif %}> {{post.user.username}}</b>
@@ -60,4 +62,52 @@
 <b>There are no posts in this subforum</b>
 </div>
 {% endif %}
+
+<script src="https://use.fontawesome.com/fe459689b4.js"></script>
+<script>
+
+var btn1 = document.querySelector('#green');
+var btn2 = document.querySelector('#red')
+btn1.addEventListener('click', function() {
+    if (btn2.classList.contains('red')) {
+      btn2.classList.remove('red');
+    }
+  btn1.classList.toggle('green');
+});
+
+btn2.addEventListener('click', function() {
+    if (btn1.classList.contains('green')) {
+      btn1.classList.remove('green');
+    }
+  btn2.classList.toggle('red');
+});
+
+
+</script>
+<style>
+
+	body{
+  margin: 40px;
+}
+
+button{
+  cursor: pointer;
+  outline: 0;
+  color: #AAA;
+
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.green{
+  color: green;
+}
+
+.red{
+  color: red;
+}
+</style>
 {% endblock %}
+
