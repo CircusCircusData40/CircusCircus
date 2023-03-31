@@ -140,17 +140,4 @@ def add_subforum(title, description, parent=None):
     db.session.commit()
     return sub
 
-# NOT WORK
-# class PersonalDetails(db.Model):
-#     name = db.Column(db.Text, primary_key = True)
-#     email = db.Column(db.Text)
-#     gender = db.Column(db.Text)
-#     age = db.Column(db.Integer)
-#     comments = db.Column(db.Text)
-#
-#     def __int__(self, name, email, gender, age, comments):
-#         self.name = name
-#         self.email = email
-#         self.gender = gender
-#         self.age = age
-#         self.comments = comments
+
