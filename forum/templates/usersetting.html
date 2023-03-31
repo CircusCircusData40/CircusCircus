@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 {% block body%}
 <div>
-    <form action="user_submit" method="post">
+  Hello, please enter your information <br>
+    <form action="submit" method="post">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required><br>
 
@@ -18,18 +19,18 @@
       <label for="age">Age:</label>
       <input type="number" id="age" name="age" required><br>
 
-      <label for="comments">Comments:</label><br>
+      <label for="comments">Additional Info:</label><br>
 
       <textarea id="comments" name="comments"></textarea><br>
 
       <input type="submit" value="Submit"><br>
     </form>
 <hr>
-<!--    <form action="upload" method="post" enctype="multipart/form-data">-->
-<!--      <label for="photo">Choose a photo:</label>-->
-<!--      <input type="file" id="photo" name="photo">-->
-<!--      <br>-->
-<!--      <input type="submit" value="Upload">-->
-<!--    </form>-->
+    <form action="submit" method="post" enctype="multipart/form-data">
+      <label for="photo">Choose a photo:</label>
+      <input type="file" id="photo" name="photo">
+      <br>
+      <input type="submit" value="Upload">
+    </form>
 </div>
 {% endblock %}
