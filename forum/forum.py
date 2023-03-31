@@ -11,6 +11,7 @@ from forum.app import login_manager
 from forum.accounts import *
 from forum.user import *
 from forum.user_settings import *
+from forum.bread import *
 
 @login_manager.user_loader
 def load_user(userid):

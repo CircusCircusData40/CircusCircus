@@ -79,6 +79,7 @@ class Subforum(db.Model):
 		self.title = title
 		self.description = description
 
+
 class Comment(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	content = db.Column(db.Text)
@@ -130,3 +131,21 @@ def add_subforum(title, description, parent=None):
 	print("adding " + title)
 	db.session.commit()
 	return sub
+
+
+# class PersonalDetails(PersonDetails, db.Model):
+# 	id = db.Column(db.Integer, primary_key=True)
+# 	username = db.Column(db.Text, unique=True)
+# 	password_hash = db.Column(db.Text)
+# 	email = db.Column(db.Text, unique=True)
+# 	admin = db.Column(db.Boolean, default=False)
+# 	posts = db.relationship("Post", backref="user")
+# 	comments = db.relationship("Comment", backref="user")
+#
+# 	def __init__(self, email, username, password):
+# 		self.email = email
+# 		self.username = username
+# 		self.password_hash = generate_password_hash(password)
+#
+# 	def check_password(self, password):
+# 		return check_password_hash(self.password_hash, password)

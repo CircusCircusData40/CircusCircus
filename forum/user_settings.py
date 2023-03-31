@@ -32,7 +32,7 @@ def usersetting():
 #         gender = request.form["gender"]
 #         age = request.form["age"]
 #         comments = request.form["comments"]
-#
+#         details =
 #         db.session.add(name, email, gender, age, comments)
 #         db.session.commit()
 #     else:
