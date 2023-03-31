@@ -17,13 +17,13 @@ def instructor():
 
 # TO BYPASS ALL REQUEST
 @app.route("/usersetting")
-def usersetting():
+def user_setting():
     return render_template("usersetting.html")
 
 #
 #NOT WORK
 # # @login_required
-# @app.route('/usersetting', method=["POST"])
+# @app.route("/usersetting", method=["POST"])
 # def usersetting():
 #     if request.method == "POST":
 #         name = request.form["name"]
