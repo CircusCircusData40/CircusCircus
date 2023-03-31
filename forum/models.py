@@ -30,14 +30,16 @@ class Post(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
 	postdate = db.Column(db.DateTime)
+	is_private = db.Column(db.Boolean)
 
 	#cache stuff
 	lastcheck = None
 	savedresponce = None
-	def __init__(self, title, content, postdate):
+	def __init__(self, title, content, postdate, is_private = False):
 		self.title = title
 		self.content = content
 		self.postdate = postdate
+		self.is_private = is_private
 	def get_time_string(self):
 		#this only needs to be calculated every so often, not for every request
 		#this can be a rudamentary chache
