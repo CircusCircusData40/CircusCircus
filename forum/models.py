@@ -4,148 +4,153 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forum.app import app, db, login_manager
 
 
-#OBJECT MODELS
+# OBJECT MODELS
 class User(UserMixin, db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.Text, unique=True)
-	password_hash = db.Column(db.Text)
-	email = db.Column(db.Text, unique=True)
-	admin = db.Column(db.Boolean, default=False)
-	posts = db.relationship("Post", backref="user")
-	comments = db.relationship("Comment", backref="user")
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.Text, unique=True)
+    password_hash = db.Column(db.Text)
+    email = db.Column(db.Text, unique=True)
+    admin = db.Column(db.Boolean, default=False)
+    posts = db.relationship("Post", backref="user")
+    comments = db.relationship("Comment", backref="user")
 
-	def __init__(self, email, username, password):
-		self.email = email
-		self.username = username
-		self.password_hash = generate_password_hash(password)
-	def check_password(self, password):
-		return check_password_hash(self.password_hash, password)
+    def __init__(self, email, username, password):
+        self.email = email
+        self.username = username
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 
 class Post(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.Text)
-	content = db.Column(db.Text)
-	comments = db.relationship("Comment", backref="post")
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
-	postdate = db.Column(db.DateTime)
-	is_private = db.Column(db.Boolean)
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text)
+    content = db.Column(db.Text)
+    comments = db.relationship("Comment", backref="post")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
+    postdate = db.Column(db.DateTime)
+    is_private = db.Column(db.Boolean)
 
-	#cache stuff
-	lastcheck = None
-	savedresponce = None
-	def __init__(self, title, content, postdate, is_private = False):
-		self.title = title
-		self.content = content
-		self.postdate = postdate
-		self.is_private = is_private
-	def get_time_string(self):
-		#this only needs to be calculated every so often, not for every request
-		#this can be a rudamentary chache
-		now = datetime.datetime.now()
-		if self.lastcheck is None or (now - self.lastcheck).total_seconds() > 30:
-			self.lastcheck = now
-		else:
-			return self.savedresponce
+    # cache stuff
+    lastcheck = None
+    savedresponce = None
 
-		diff = now - self.postdate
+    def __init__(self, title, content, postdate, is_private=False):
+        self.title = title
+        self.content = content
+        self.postdate = postdate
+        self.is_private = is_private
 
-		seconds = diff.total_seconds()
-		print(seconds)
-		if seconds / (60 * 60 * 24 * 30) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
-		elif seconds / (60 * 60 * 24) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60*  60 * 24))) + " days ago"
-		elif seconds / (60 * 60) > 1:
-			self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
-		elif seconds / (60) > 1:
-			self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
-		else:
-			self.savedresponce =  "Just a moment ago!"
+    def get_time_string(self):
+        # this only needs to be calculated every so often, not for every request
+        # this can be a rudamentary chache
+        now = datetime.datetime.now()
+        if self.lastcheck is None or (now - self.lastcheck).total_seconds() > 30:
+            self.lastcheck = now
+        else:
+            return self.savedresponce
 
-		return self.savedresponce
+        diff = now - self.postdate
+
+        seconds = diff.total_seconds()
+        print(seconds)
+        if seconds / (60 * 60 * 24 * 30) > 1:
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
+        elif seconds / (60 * 60 * 24) > 1:
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24))) + " days ago"
+        elif seconds / (60 * 60) > 1:
+            self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
+        elif seconds / (60) > 1:
+            self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
+        else:
+            self.savedresponce = "Just a moment ago!"
+
+        return self.savedresponce
+
 
 class Subforum(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.Text, unique=True)
-	description = db.Column(db.Text)
-	subforums = db.relationship("Subforum")
-	parent_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
-	posts = db.relationship("Post", backref="subforum")
-	path = None
-	hidden = db.Column(db.Boolean, default=False)
-	def __init__(self, title, description):
-		self.title = title
-		self.description = description
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text, unique=True)
+    description = db.Column(db.Text)
+    subforums = db.relationship("Subforum")
+    parent_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
+    posts = db.relationship("Post", backref="subforum")
+    path = None
+    hidden = db.Column(db.Boolean, default=False)
+
+    def __init__(self, title, description):
+        self.title = title
+        self.description = description
 
 
 class Comment(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	content = db.Column(db.Text)
-	postdate = db.Column(db.DateTime)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-	post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    postdate = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"))
 
-	lastcheck = None
-	savedresponce = None
-	def __init__(self, content, postdate):
-		self.content = content
-		self.postdate = postdate
-	def get_time_string(self):
-		#this only needs to be calculated every so often, not for every request
-		#this can be a rudamentary chache
-		now = datetime.datetime.now()
-		if self.lastcheck is None or (now - self.lastcheck).total_seconds() > 30:
-			self.lastcheck = now
-		else:
-			return self.savedresponce
+    lastcheck = None
+    savedresponce = None
 
-		diff = now - self.postdate
-		seconds = diff.total_seconds()
-		if seconds / (60 * 60 * 24 * 30) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
-		elif seconds / (60 * 60 * 24) > 1:
-			self.savedresponce =  " " + str(int(seconds / (60*  60 * 24))) + " days ago"
-		elif seconds / (60 * 60) > 1:
-			self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
-		elif seconds / (60) > 1:
-			self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
-		else:
-			self.savedresponce =  "Just a moment ago!"
-		return self.savedresponce
+    def __init__(self, content, postdate):
+        self.content = content
+        self.postdate = postdate
+
+    def get_time_string(self):
+        # this only needs to be calculated every so often, not for every request
+        # this can be a rudamentary chache
+        now = datetime.datetime.now()
+        if self.lastcheck is None or (now - self.lastcheck).total_seconds() > 30:
+            self.lastcheck = now
+        else:
+            return self.savedresponce
+
+        diff = now - self.postdate
+        seconds = diff.total_seconds()
+        if seconds / (60 * 60 * 24 * 30) > 1:
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
+        elif seconds / (60 * 60 * 24) > 1:
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24))) + " days ago"
+        elif seconds / (60 * 60) > 1:
+            self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
+        elif seconds / (60) > 1:
+            self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
+        else:
+            self.savedresponce = "Just a moment ago!"
+        return self.savedresponce
+
 
 def add_subforum(title, description, parent=None):
-	sub = Subforum(title, description)
-	if parent:
-		for subforum in parent.subforums:
-			if subforum.title == title:
-				return
-		parent.subforums.append(sub)
-	else:
-		subforums = Subforum.query.filter(Subforum.parent_id == None).all()
-		for subforum in subforums:
-			if subforum.title == title:
-				return
-		db.session.add(sub)
-	print("adding " + title)
-	db.session.commit()
-	return sub
+    sub = Subforum(title, description)
+    if parent:
+        for subforum in parent.subforums:
+            if subforum.title == title:
+                return
+        parent.subforums.append(sub)
+    else:
+        subforums = Subforum.query.filter(Subforum.parent_id == None).all()
+        for subforum in subforums:
+            if subforum.title == title:
+                return
+        db.session.add(sub)
+    print("adding " + title)
+    db.session.commit()
+    return sub
 
-
-# class PersonalDetails(PersonDetails, db.Model):
-# 	id = db.Column(db.Integer, primary_key=True)
-# 	username = db.Column(db.Text, unique=True)
-# 	password_hash = db.Column(db.Text)
-# 	email = db.Column(db.Text, unique=True)
-# 	admin = db.Column(db.Boolean, default=False)
-# 	posts = db.relationship("Post", backref="user")
-# 	comments = db.relationship("Comment", backref="user")
+# NOT WORK
+# class PersonalDetails(db.Model):
+#     name = db.Column(db.Text, primary_key = True)
+#     email = db.Column(db.Text)
+#     gender = db.Column(db.Text)
+#     age = db.Column(db.Integer)
+#     comments = db.Column(db.Text)
 #
-# 	def __init__(self, email, username, password):
-# 		self.email = email
-# 		self.username = username
-# 		self.password_hash = generate_password_hash(password)
-#
-# 	def check_password(self, password):
-# 		return check_password_hash(self.password_hash, password)
+#     def __int__(self, name, email, gender, age, comments):
+#         self.name = name
+#         self.email = email
+#         self.gender = gender
+#         self.age = age
+#         self.comments = comments

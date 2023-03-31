@@ -2,6 +2,7 @@
 from flask import render_template, request
 
 from forum.app import app, db
+# from forum.models import PersonalDetails
 
 
 @app.route('/team')
@@ -19,12 +20,10 @@ def instructor():
 def usersetting():
     return render_template("usersetting.html")
 
-
-
-
-# THIS DOESN"NT WORK
-# # # @login_required
-# @app.route('/usersetting', method=["GET", "POST"])
+#
+#NOT WORK
+# # @login_required
+# @app.route('/usersetting', method=["POST"])
 # def usersetting():
 #     if request.method == "POST":
 #         name = request.form["name"]
@@ -32,12 +31,12 @@ def usersetting():
 #         gender = request.form["gender"]
 #         age = request.form["age"]
 #         comments = request.form["comments"]
-#         details =
-#         db.session.add(name, email, gender, age, comments)
+#
+#         details = PersonalDetails(name, email, gender, age, comments)
+#         db.session.add(details)
 #         db.session.commit()
 #     else:
 #         return render_template("usersetting.html")
-
 
 # THIS DOES NOT WORK
 # conn = sqlite3.connect('database.db')
