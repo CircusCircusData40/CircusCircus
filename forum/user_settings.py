@@ -1,7 +1,7 @@
 # trung's code
-from flask import render_template
+from flask import render_template, request
 
-from forum.app import app
+from forum.app import app, db
 
 
 @app.route('/team')
@@ -14,44 +14,34 @@ def instructor():
     return render_template("instructor.html")
 
 
+# TO BYPASS ALL REQUEST
 @app.route("/usersetting")
-def usersettings():
-    return render_template("usersetting.html", methods=["POST"])
+def usersetting():
+    return render_template("usersetting.html")
 
 
-# # @login_required
-# @app.route('/usersettings', methods=["POST"])
-# def user_submit():
-#     # if request.method == "POST":
-#     #     name = request.form['name']
-#     #     email = request.form['email']
-#     #     gender = request.form['gender']
-#     #     age = request.form['age']
-#     #     comments = request.form['comments']
-#     #     details = [name, email, gender, age, comments]
-#         # conn = sqlite3.connect('database.db')
-#         # c = conn.cursor()
-#         # c.execute("Insert into User", (name, email, gender, age, comments))
-#         # conn.commit()
-#         # conn.close()
+
+
+# THIS DOESN"NT WORK
+# # # @login_required
+# @app.route('/usersetting', method=["GET", "POST"])
+# def usersetting():
+#     if request.method == "POST":
+#         name = request.form["name"]
+#         email = request.form["email"]
+#         gender = request.form["gender"]
+#         age = request.form["age"]
+#         comments = request.form["comments"]
 #
-#         # db.session.add(details)
-#         # db.session.commit()
-#     # else:
-#     return render_template("usersetting.html")
-#
-# # @login_required
-# # @app.route('/usersettings', methods=["POST"])
-# # def photo_upload():
-# #     if request.method == "POST":
-# #         photo = request.form["photo"]
-# # conn = sqlite3.connect('database.db')
-# # c = conn.cursor()
-# # c.execute("Insert Photo into User", photo)
-# # conn.commit()
-# # conn.close()
-# #
-# # db.session.add(photo)
-# # db.session.commit()
-# # else:
-# #     return render_template("usersetting.html")
+#         db.session.add(name, email, gender, age, comments)
+#         db.session.commit()
+#     else:
+#         return render_template("usersetting.html")
+
+
+# THIS DOES NOT WORK
+# conn = sqlite3.connect('database.db')
+# c = conn.cursor()
+# c.execute("Insert into User", (name, email, gender, age, comments))
+# conn.commit()
+# conn.close()
