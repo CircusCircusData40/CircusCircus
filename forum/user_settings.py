@@ -1,6 +1,8 @@
 # trung's code
 from flask import render_template, request
-
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, Column, String, Integer, CHAR, Text
+from sqlalchemy.orm import sessionmaker
 from forum.app import app, db
 
 
@@ -14,40 +16,21 @@ def instructor():
     return render_template("instructor.html")
 
 
-
 # TO BYPASS ALL REQUEST
-@app.route("/usersetting")
-def usersetting():
-    return render_template("usersetting.html")
-
-
-# WHY NOT WORK
-# # @login_required
-# @app.route("/usersetting", methods=["GET", "POST"])
+# @app.route("/usersetting")
 # def usersetting():
-#     name = request.form["name"]
-#     email = request.form["email"]
-#     gender = request.form["gender"]
-#     age = request.form["age"]
-#     comments = request.form["comments"]
-#
-#     if request.method == "POST":
-#         details = PersonalDetails(name, email, gender, age, comments)
-#         db.session.add(details)
-#         db.session.commit()
-#     else:
-#         return render_template("usersetting.html")
+#     return render_template("usersetting.html")
 
-# # NOT WORK
+
 # class PersonalDetails(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String)
+#     __user_setting__ = "details"
+#
+#     name = db.Column(db.String, primary_key=True)
 #     email = db.Column(db.String)
 #     gender = db.Column(db.String)
 #     age = db.Column(db.Integer)
 #     comments = db.Column(db.Text)
-# # #
-# # NOT NEEDED
+#
 #     def __int__(self, name, email, gender, age, comments):
 #         self.name = name
 #         self.email = email
@@ -55,4 +38,68 @@ def usersetting():
 #         self.age = age
 #         self.comments = comments
 #
+#     def __repr__(self):
+#         return f"({self.name} {self.email} {self.gender} {self.age} {self.comments})"
+
+
+# TRY TO MAKE DIFFERENT DATABASE TO SEE IF IT WORK
 #
+#
+
+
+Base = declarative_base()
+
+
+class PersonalDetails(Base):
+    __tablename__ = "user"
+
+    name = Column("name", String, primary_key=True)
+    email = Column("email", String)
+    gender = Column("gender", CHAR)
+    age = Column("age", Integer)
+    comments = Column("comments", Text)
+
+    def __int__(self, name, email, gender, age, comments):
+        self.name = name
+        self.email = email
+        self.gender = gender
+        self.age = age
+        self.comments = comments
+
+    def __repr__(self):
+        return f"({self.name} {self.email} {self.gender} {self.age} {self.comments})"
+
+
+engine = create_engine("sqlite:///trungdb.db", echo=True)
+Base.metadata.create_all(bind=engine)
+
+Session = sessionmaker(bind=engine)
+session = Session()
+
+
+# user1 = PersonalDetails("Trung","trung@trung.com","Male",23,"Nothing")
+# session.add(user1)
+# session.commit()
+# WHY NOT WORK
+# # @login_required
+@app.route("/usersetting", methods=["GET", "POST"])
+def usersetting():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        gender = request.form["gender"]
+        age = request.form["age"]
+        comments = request.form["comments"]
+
+        # ERROR __INIT__ TAKE ONLY 1 ARGUMENT BUT 6 PROVIDED
+        details = PersonalDetails(name, email, gender, age, comments)
+
+        print(details)
+        session.add(details)
+        session.commit()
+    else:
+        return render_template("usersetting.html")
+
+
+for i in session.query(PersonalDetails):
+    print(i)
