@@ -17,7 +17,7 @@ def instructor():
 
 # TO BYPASS ALL REQUEST
 @app.route("/usersetting")
-def user_setting():
+def usersetting():
     return render_template("usersetting.html")
 
 
