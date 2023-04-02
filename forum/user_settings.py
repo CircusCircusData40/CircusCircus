@@ -60,14 +60,14 @@ class PersonalDetails(Base):
     comments = Column("comments", Text)
 
     def __int__(self, name, email, gender, age, comments):
-        self.name = name
-        self.email = email
-        self.gender = gender
-        self.age = age
-        self.comments = comments
+        self._name = name
+        self._email = email
+        self._gender = gender
+        self._age = age
+        self._comments = comments
 
     def __repr__(self):
-        return f"({self.name} {self.email} {self.gender} {self.age} {self.comments})"
+        return f"({self._name} {self._email} {self._gender} {self._age} {self._comments})"
 
 
 engine = create_engine("sqlite:///trungdb.db", echo=True)
@@ -101,5 +101,5 @@ def usersetting():
         return render_template("usersetting.html")
 
 
-for i in session.query(PersonalDetails):
-    print(i)
+# for i in session.query(PersonalDetails):
+#     print(i)
