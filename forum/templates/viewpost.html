@@ -13,9 +13,21 @@
 			{{ post.get_time_string() }}
 		</div>
 	</div>
-	<div class="postcontent">
-		{{post.content}}
-	</div>
+	{% if post.is_private %}
+		{% if current_user.is_authenticated %}
+			<div class="postcontent">
+				{{post.content}}
+			</div>
+		{% else %}
+		<div class="postcontent">
+			You need to login to see this post.
+		</div>
+		{% endif %}
+	{% else %}
+		<div class="postcontent">
+			{{post.content}}
+		</div>
+	{% endif %}
 
 </div>
 <div class="addcomment" id="addcomment">

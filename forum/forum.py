@@ -11,6 +11,7 @@ from forum.app import login_manager
 from forum.accounts import *
 from forum.user import *
 from forum.user_settings import *
+from forum.bread import *
 
 @login_manager.user_loader
 def load_user(userid):
@@ -93,4 +94,5 @@ if not Subforum.query.all():
     add_subforum("Bug Reports", "Report bugs with the forum here", admin)
     add_subforum("General Discussion", "Use this subforum to post anything you want")
     add_subforum("Other", "Discuss other things here")
+    # add_subforum("Bready Bread Bread", "A place for people with bread on the head")
 

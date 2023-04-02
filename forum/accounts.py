@@ -75,6 +75,7 @@ def action_post():
     user = current_user
     title = request.form['title']
     content = request.form['content']
+    is_private = request.form['is_private']
     # check for valid posting
     errors = []
     retry = False
@@ -86,7 +87,8 @@ def action_post():
         retry = True
     if retry:
         return render_template("createpost.html", subforum=subforum, errors=errors)
-    post = Post(title, content, datetime.datetime.now())
+    is_private = valid_private(is_private)
+    post = Post(title, content, datetime.datetime.now(), is_private)
     subforum.posts.append(post)
     user.posts.append(post)
     db.session.commit()
