@@ -51,16 +51,6 @@
 	<div class="header">
 		{% include 'header.html' %}
 	</div>
-	{% if errors %}
-	<div class="errors">
-	{% for error in errors %}
-		<p class="error">
-			{{ error }}
-		</p>
-
-	{% endfor %}
-	</div>
-	{% endif %}
 
 
 	<div class="container-fluid text-center">
@@ -76,6 +66,18 @@
 		  <p>THE VOICE OF COOL DATA 40 COHORT</p>
 		  <hr>
 			<div class="content">
+
+	{% if errors %}
+	<div class="errors">
+	{% for error in errors %}
+		<p class="error" style="color:red;">
+			<b>{{ error }}</b>
+		</p>
+
+	{% endfor %}
+	</div>
+	{% endif %}
+
 			{% block body %}{% endblock %}
 			</div>
 		</div>
