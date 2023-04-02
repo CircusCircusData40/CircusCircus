@@ -45,8 +45,10 @@
 	<div class="post">
 		<div class="posttitle">
 		<a href="/viewpost?post={{ post.id }}">{{ post.title }}</a>
-			<button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
-			 <button class="btn" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
+			<button class="btn" id="green" onclick="like()"><i class="fa fa-thumbs-up fa-lg" id="img1" aria-hidden="true"></i></button>
+				<label id="likeCounter">0</label>
+			<button class="btn" id="red" onclick="disLike()"><i class="fa fa-thumbs-down fa-lg" id="img2" aria-hidden="true"></i></button>
+				<label id="disLikeCounter">0</label>
 		</div>
 		<div class="postusername">
 			by <b {% if post.user.admin %} style="color: red;" {% endif %}> {{post.user.username}}</b>
@@ -65,22 +67,32 @@
 
 <script src="https://use.fontawesome.com/fe459689b4.js"></script>
 <script>
+var likeCounter = 0
+var disLikeCounter = 0
+var likeUpdated = false
+var disLikeUpdated = false
 
-var btn1 = document.querySelector('#green');
-var btn2 = document.querySelector('#red')
-btn1.addEventListener('click', function() {
-    if (btn2.classList.contains('red')) {
-      btn2.classList.remove('red');
-    }
-  btn1.classList.toggle('green');
-});
+function like(){
+var element1 = document.getElementsByClassName("fa fa-thumbs-up fa-lg");
+	if(!likeUpdated && document.getElementById("green")){
+		element1.img1.classList.toggle('green')
+		likeUpdated = true
+	}
+	likeCounter = likeCounter + 1;
+	document.getElementById("likeCounter").innerHTML = likeCounter;
+}
 
-btn2.addEventListener('click', function() {
-    if (btn1.classList.contains('green')) {
-      btn1.classList.remove('green');
-    }
-  btn2.classList.toggle('red');
-});
+function disLike(){
+var element1 = document.getElementsByClassName("fa fa-thumbs-up fa-lg");
+var element2 = document.getElementsByClassName("fa fa-thumbs-down fa-lg");
+	if(!disLikeUpdated && document.getElementById("red")){
+	    disLikeUpdated = true
+		element2.img2.classList.toggle('red')
+	}
+	disLikeCounter = disLikeCounter + 1;
+	document.getElementById("disLikeCounter").innerHTML = disLikeCounter;
+}
+
 
 
 </script>
