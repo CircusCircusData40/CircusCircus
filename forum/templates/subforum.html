@@ -74,7 +74,7 @@ var disLikeUpdated = false
 
 function like(){
 var element1 = document.getElementsByClassName("fa fa-thumbs-up fa-lg");
-	if(!likeUpdated && document.getElementById("green")){
+	if(!likeUpdated){
 		element1.img1.classList.toggle('green')
 		likeUpdated = true
 	}
@@ -85,7 +85,7 @@ var element1 = document.getElementsByClassName("fa fa-thumbs-up fa-lg");
 function disLike(){
 var element1 = document.getElementsByClassName("fa fa-thumbs-up fa-lg");
 var element2 = document.getElementsByClassName("fa fa-thumbs-down fa-lg");
-	if(!disLikeUpdated && document.getElementById("red")){
+	if(!disLikeUpdated){
 	    disLikeUpdated = true
 		element2.img2.classList.toggle('red')
 	}
