@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+
+<div class="postsubmit">
+	Enter your message here:<br>
+
+
+	<form action="compose_message" method="POST">
+
+		<input class="inputbox" size="100" type="text" placeholder="To" name="to"><br>
+
+		<textarea class="inputbox" rows="15" cols="100"  name="message" placeholder="Enter message here"></textarea><br>
+
+
+
+		<input class="inputbox" type="submit" value="Submit Message">
+	</form>
+</div>
+{% endblock %}

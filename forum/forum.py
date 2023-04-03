@@ -68,6 +68,12 @@ def viewpost():
         Comment.id.desc())  # no need for scalability now
     return render_template("viewpost.html", post=post, path=subforum.path, comments=comments)
 
+@app.route('/composeMessage')
+def composeMessage():
+
+    return render_template("composemessage.html")
+
+
 
 def error(errormessage):
     return "<b style=\"color: red;\">" + errormessage + "</b>"
