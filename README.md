@@ -31,7 +31,7 @@ This currently puts a sqlite3 db in the /tmp directory.
 $ python3.9 -m venv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
-$ ./run.sh
+$ ./run.shc
 ```
 
 and it should appear on port 5000

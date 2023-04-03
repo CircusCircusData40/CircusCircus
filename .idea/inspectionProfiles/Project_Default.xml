@@ -4,9 +4,14 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="2">
+          <list size="7">
             <item index="0" class="java.lang.String" itemvalue="bootstrap.min.css" />
             <item index="1" class="java.lang.String" itemvalue="style.css" />
+            <item index="2" class="java.lang.String" itemvalue="comment.user.admin" />
+            <item index="3" class="java.lang.String" itemvalue="%}" />
+            <item index="4" class="java.lang.String" itemvalue="{%" />
+            <item index="5" class="java.lang.String" itemvalue="endif" />
+            <item index="6" class="java.lang.String" itemvalue="dataset" />
           </list>
         </value>
       </option>
