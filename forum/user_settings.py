@@ -22,14 +22,42 @@ def instructor():
 #     return render_template("usersetting.html")
 
 
-# class PersonalDetails(db.Model):
-#     __user_setting__ = "details"
+class PersonalDetails(db.Model):
+    __user_setting__ = "details"
+
+    name_ = db.Column(db.String, primary_key=True)
+    email_ = db.Column(db.String)
+    gender_ = db.Column(db.String)
+    age_ = db.Column(db.Integer)
+    comments_ = db.Column(db.Text)
+
+    def __int__(self, name, email, gender, age, comments):
+        self.name = name
+        self.email = email
+        self.gender = gender
+        self.age = age
+        self.comments = comments
+
+    def __repr__(self):
+        return f"({self.name} {self.email} {self.gender} {self.age} {self.comments})"
+
+
+# TRY TO MAKE DIFFERENT DATABASE TO SEE IF IT WORK
 #
-#     name = db.Column(db.String, primary_key=True)
-#     email = db.Column(db.String)
-#     gender = db.Column(db.String)
-#     age = db.Column(db.Integer)
-#     comments = db.Column(db.Text)
+#
+
+#
+# Base = declarative_base()
+#
+#
+# class PersonalDetails(Base):
+#     __tablename__ = "user"
+#
+#     name = Column("name", String, primary_key=True)
+#     email = Column("email", String)
+#     gender = Column("gender", CHAR)
+#     age = Column("age", Integer)
+#     comments = Column("comments", Text)
 #
 #     def __int__(self, name, email, gender, age, comments):
 #         self.name = name
@@ -39,43 +67,15 @@ def instructor():
 #         self.comments = comments
 #
 #     def __repr__(self):
-#         return f"({self.name} {self.email} {self.gender} {self.age} {self.comments})"
-
-
-# TRY TO MAKE DIFFERENT DATABASE TO SEE IF IT WORK
+#         return f"({self._name} {self._email} {self._gender} {self._age} {self._comments})"
 #
 #
-
-
-Base = declarative_base()
-
-
-class PersonalDetails(Base):
-    __tablename__ = "user"
-
-    name = Column("name", String, primary_key=True)
-    email = Column("email", String)
-    gender = Column("gender", CHAR)
-    age = Column("age", Integer)
-    comments = Column("comments", Text)
-
-    def __int__(self, name, email, gender, age, comments):
-        self._name = name
-        self._email = email
-        self._gender = gender
-        self._age = age
-        self._comments = comments
-
-    def __repr__(self):
-        return f"({self._name} {self._email} {self._gender} {self._age} {self._comments})"
-
-
-engine = create_engine("sqlite:///trungdb.db", echo=True)
-Base.metadata.create_all(bind=engine)
-
-Session = sessionmaker(bind=engine)
-session = Session()
-
+# engine = create_engine("sqlite:///trungdb.db", echo=True)
+# Base.metadata.create_all(bind=engine)
+#
+# Session = sessionmaker(bind=engine)
+# session = Session()
+#
 
 # user1 = PersonalDetails("Trung","trung@trung.com","Male",23,"Nothing")
 # session.add(user1)
