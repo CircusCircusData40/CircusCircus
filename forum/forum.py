@@ -13,6 +13,7 @@ from forum.user import *
 from forum.user_settings import *
 from forum.bread import *
 
+
 @login_manager.user_loader
 def load_user(userid):
     return User.query.get(userid)

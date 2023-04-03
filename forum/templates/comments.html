@@ -1,57 +1,63 @@
-{%if comments%}
-<div class="comments">
-{% for comment in comments %}
+{% extends 'layout.html' %}
+{% block body%}
 
-	<div class="comment">
-		<div class="commentuser">
-			(<span  {% if comment.user.admin %} style="color: red;" {% endif %}>{{ comment.user.username }}</span>) -
-		</div>
-		<div class="commentcontent">
-			{{ comment.content }}
-		</div>
+<div> Hello </div>
+{% endblock %}
 
-		<div class="commenttime">
-			{{ comment.get_time_string() }}
-		</div>
-	</div>
-	<br>
+<!--{%if comments%}-->
+<!--<div class="comments">-->
+<!--{% for comment in comments %}-->
 
-{% endfor %}
-</div>
-{% endif %}
+<!--    <div class="comment">-->
+<!--        <div class="commentuser">-->
+<!--            (<span  {% if comment.user.admin %} style="color: red;" {% endif %}>{{ comment.user.username }}</span>) - -->
+<!--        </div>-->
+<!--        <div class="commentcontent">-->
+<!--            {{ comment.content }}-->
+<!--        </div>-->
 
-<div class="addcomment" id="addcomment" style="text-align: center;">
-	<form action="/action_comment?post={{ post.id }}" method="POST">
-		<textarea class="inputbox varwidth" rows="6" name="content"></textarea><br>
-		<input class="inputbox" style="margin-bottom: 1%;" type="submit" value="Comment">
-	</form>
-</div>
-<!--This hides the add comment box-->
-<script type="text/javascript">
-	var div = document.getElementById("addcomment");
-	div.style.display = "none";
-</script>
-<!--This shows the add comment button when we press a button-->
-<div style="text-align: center;">
-	{% if current_user.is_authenticated %}
-	<input type="button" id="displayaddcomment" onclick="toggle()" value="Add a comment">
+<!--        <div class="commenttime">-->
+<!--            {{ comment.get_time_string() }}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <br>-->
 
-	{% else %}
-	<a href="/loginform">Login or register to make a comment</a>
-	{% endif %}
-</div>
+<!--{% endfor %}-->
+<!--</div>-->
+<!--{% endif %}-->
 
-<script type="text/javascript">
-function toggle(){
-	var div = document.getElementById("addcomment");
-	var button = document.getElementById("displayaddcomment")
-	if(div.style.display == "none" || div.style.display.trim() == ""){
-		div.style.display = "inline";
-		button.value="Hide";
-	}else{
-		div.style.display = "none";
-		button.value="Add a comment"
-	}
+<!--<div class="addcomment" id="addcomment" style="text-align: center;">-->
+<!--    <form action="/action_comment?post={{ post.id }}" method="POST">-->
+<!--        <textarea class="inputbox varwidth" rows="6" name="content"></textarea><br>-->
+<!--        <input class="inputbox" style="margin-bottom: 1%;" type="submit" value="Comment">-->
+<!--    </form>-->
+<!--</div>-->
+<!--&lt;!&ndash;This hides the add comment box&ndash;&gt;-->
+<!--<script type="text/javascript">-->
+<!--    var div = document.getElementById("addcomment");-->
+<!--    div.style.display = "none";-->
+<!--</script>-->
+<!--&lt;!&ndash;This shows the add comment button when we press a button&ndash;&gt;-->
+<!--<div style="text-align: center;">-->
+<!--    {% if current_user.is_authenticated %}-->
+<!--    <input type="button" id="displayaddcomment" onclick="toggle()" value="Add a comment">-->
 
-}
-</script>
+<!--    {% else %}-->
+<!--    <a href="/loginform">Login or register to make a comment</a>-->
+<!--    {% endif %}-->
+<!--</div>-->
+
+<!--<script type="text/javascript">-->
+<!--function toggle(){-->
+<!--    var div = document.getElementById("addcomment");-->
+<!--    var button = document.getElementById("displayaddcomment")-->
+<!--    if(div.style.display == "none" || div.style.display.trim() == ""){-->
+<!--        div.style.display = "inline";-->
+<!--        button.value="Hide";-->
+<!--    }else{-->
+<!--        div.style.display = "none";-->
+<!--        button.value="Add a comment"-->
+<!--    }-->
+
+<!--}-->
+<!--</script>-->

@@ -6,6 +6,11 @@ from sqlalchemy.orm import sessionmaker
 from forum.app import app, db
 
 
+@app.route('/comments')
+def comments1():
+    return render_template("comments.html")
+
+
 @app.route('/team')
 def team():
     return render_template("team.html")
@@ -99,7 +104,6 @@ def usersetting():
         session.commit()
     else:
         return render_template("usersetting.html")
-
 
 # for i in session.query(PersonalDetails):
 #     print(i)
