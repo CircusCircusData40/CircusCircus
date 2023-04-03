@@ -7,7 +7,7 @@ from forum.app import app, db
 
 
 @app.route('/comments')
-def comments1():
+def comments():
     return render_template("comments.html")
 
 
