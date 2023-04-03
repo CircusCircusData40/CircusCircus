@@ -73,6 +73,10 @@ def composeMessage():
 
     return render_template("composemessage.html")
 
+@app.route('/viewMessages')
+def viewMessage():
+
+    return render_template("viewmessage.html")
 
 
 def error(errormessage):
